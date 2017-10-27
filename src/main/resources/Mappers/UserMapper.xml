@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.free.domain.User">
+
+    <sql id="userAllSimpleColumn">
+        uname,gender,nickname,password,email,phone,photo,signment
+    </sql>
+
+    <!--根据用户名查询某个用户    -->
+    <select id="queryUser" resultType="User" parameterType="string">
+        select
+        <include refid="userAllSimpleColumn"/>
+        from user where uname = #{username}
+    </select>
+
+    <!--根据用户名和密码查询某个用户    -->
+    <select id="queryOneUser" resultType="User">
+        select
+        <include refid="userAllSimpleColumn"/>
+        from user where uname = #{username} and password = #{password}
+    </select>
+
+    <!--把用户的具体IP信息存入到数据库-->
+    <insert id="insertIP" parameterType="map">
+        insert into ip(uname,loginTime,location) values (#{uname},#{loginTime},#{location})
+    </insert>
+
+    <!--分页查询用户详细登录信息-->
+    <select id="queryLoginDetailsByPage" resultType="Ip">
+        select loginTime,location from ip where uname = #{uname} order by iid desc limit #{start},#{limit}
+    </select>
+
+    <!--查询登录记录总条数-->
+    <select id="queryLoginRecordCounts" resultType="int">
+        select count(iid) from ip where uname = #{uname}
+    </select>
+
+    <insert id="register" parameterType="map">
+        insert into user(uname,gender,nickname,phone,password) values (#{uname},#{gender},#{nickname},#{phone},#{password})
+    </insert>
+
+    <delete id="deleteLoginRecord" parameterType="map">
+        delete from ip where uname = #{uname} order by iid limit #{deleteCount}
+    </delete>
+
+    <select id="selectPhoto" resultType="string">
+        select src from recommendPhoto
+    </select>
+
+    <update id="updatePhoto" parameterType="map">
+        update user set photo = #{photo} where uname = #{uname}
+    </update>
+
+    <update id="updateNickname" parameterType="map">
+        update user set nickname = #{nickname} where uname = #{uname}
+    </update>
+
+    <update id="updateSignment" parameterType="map">
+        update user set signment = #{signment} where uname = #{uname}
+    </update>
+</mapper>

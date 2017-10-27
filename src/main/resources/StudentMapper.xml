@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.free.controller.StudentController">
+
+ <!--   <resultMap id="StudentMap" type="Student">
+        <id column="sid" property="sid" />
+        <result column="sname" property="name" />
+        <result column="password" property="password" />
+        <result column="ssex" property="sex" />
+        <result column="enrolTime" property="enrolTime" />
+        <result column="major" property="major" />
+        <result column="type" property="type" />
+        <result column="graduateTime" property="graduateTime" />
+        <result column="clazz" property="clazz" />
+        <result column="studyTime" property="studyTime" />
+        <result column="department" property="department" />
+        <result column="photo" property="photo" />
+        <collection property="courses" ofType="Course">
+            <id column="cid" property="cid" />
+            <result column="cname" property="name" />
+            <result column="needTime" property="needTime" />
+            <result column="credit" property="credit" />
+            <result column="info" property="info" />
+            <association property="teacher" javaType="Teacher">
+                <id column="tname" property="name" />
+            </association>
+        </collection>
+    </resultMap>
+
+    <sql id="allInfo">
+        sid,sname name,password,ssex sex,enrolTime,major,type,graduateTime,clazz,studyTime,department,photo
+    </sql>
+    <select id="queryStudent" resultType="Student">
+        select
+        <include refid="allInfo" />
+        from student where sid = #{sid}
+    </select>
+    <select id="queryCourses" resultMap="StudentMap" parameterType="int">
+        select * from student s,course c,cst,teacher t where s.sid=#{sid} and s.sid=cst.sid and cst.cid=c.cid and cst.tid=t.tid;
+    </select>-->
+
+</mapper>

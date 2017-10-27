@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 定义别名简化配置 -->
+	<typeAliases>
+		<typeAlias type="cn.free.domain.Forum" alias="Forum"/>
+		<typeAlias type="cn.free.domain.Comment" alias="Comment" />
+		<typeAlias type="cn.free.domain.Post" alias="Post" />
+		<typeAlias type="cn.free.domain.User" alias="User" />
+		<typeAlias type="cn.free.domain.Ip" alias="Ip" />
+		<typeAlias type="cn.free.domain.Page" alias="Page" />
+	</typeAliases>
+
+</configuration>
