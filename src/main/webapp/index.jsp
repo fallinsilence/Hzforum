@@ -5,33 +5,43 @@
 <head>
     <title>胡子贴吧</title>
 </head>
+<style>
+    a {
+        text-decoration: none;
+    }
+
+    #whole, #b {
+        text-align: center;
+    }
+</style>
 <body>
-<c:if test="${not empty user}" var="flag">
+<div id="whole">
+    <c:if test="${not empty user}" var="flag">
+        <div>
+            <div>
+                <a href="jsps/user/home.jsp">${user.nickname}</a>,欢迎回到胡子贴吧！
+            </div>
+            <br>
+            <br>
+        </div>
+    </c:if>
 
-    <table>
-        <tr>
-                ${user.nickname},欢迎回到胡子贴吧！
-        </tr>
-        <tr>
-            <td>
-                <a href="">关注的吧</a>
-            </td>
-            <td>
-                <a href="">帖子</a>
-            </td>
-            <td>
-                <a href="">回复</a>
-            </td>
-            <td>
-                <a href="">收藏</a>
-            </td>
-        </tr>
-    </table>
+    <c:if test="${!flag}">
+        亲，请去<a href="jsps/user/login.jsp">登录</a>,如无账号，请去<a href="jsps/user/register.jsp">注册</a>
+    </c:if>
 
-</c:if>
 
-<c:if test="${!flag}">
-    亲，请去<a href="jsps/user/login.jsp">登录</a>,如无账号，请去<a href="jsps/user/register.jsp">注册</a>
-</c:if>
+    <div id="b">
+        <form action="${pageContext.request.contextPath}/forum/selectForum.action" method="post">
+            <input type="text" name="selectForum">
+            <input type="submit" value="进入贴吧">
+        </form>
+    </div>
+
+    <div>
+        <a href="">贴吧推荐</a>
+        <a href="">帖子推荐</a>
+    </div>
+</div>
 </body>
 </html>

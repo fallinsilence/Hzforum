@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.free.domain.Forum">
+    <resultMap id="forumWholeInfo" type="Forum">
+        <id property="fname" column="fname"/>
+        <result property="category" column="category"/>
+        <result property="fcount" column="fcount"/>
+        <result property="createTime" column="createTime"/>
+        <result property="attention" column="attention"/>
+        <collection property="posts" ofType="Post">
+            <id property="pid" column="pid"/>
+            <result property="title" column="title"/>
+            <result property="content" column="content"/>
+            <result property="postTime" column="postTime"/>
+            <result property="pcount" column="pcount"/>
+            <result property="lastReplyTime" column="lastReplyTime"/>
+            <result property="lastReplyUser" column="lastReplyUser"/>
+            <result property="uname" column="uname"/>
+            <result property="maxFloor" column="maxFloor"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="queryPost" type="Post">
+        <id property="pid" column="pid"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="postTime" column="postTime"/>
+        <result property="pcount" column="pcount"/>
+        <result property="maxFloor" column="maxFloor"/>
+        <association property="user" javaType="User">
+            <id property="uname" column="uname"/>
+            <result property="nickname" column="nickname"/>
+            <result property="photo" column="photo"/>
+            <result property="signment" column="signment"/>
+        </association>
+    </resultMap>
+
+    <select id="selectForum" resultType="Forum">
+        select * from forum where fname = #{fname}
+    </select>
+
+    <insert id="addForum" parameterType="map">
+        insert into forum(fname,fcount,createTime) values(#{fname},#{fcount},#{createTime})
+    </insert>
+
+    <select id="queryPosts" resultMap="forumWholeInfo">
+        select * from forum f, ufp, post p,user u where f.fname = #{fname} and f.fname = ufp.fname and ufp.pid = p.pid
+        and ufp.uname = u.uname order by lastReplyTime desc;
+    </select>
+
+    <insert id="addNewPost" parameterType="map">
+        insert into post(pid,title,content,postTime,lastReplyTime,lastReplyUser) values
+        (#{pid},#{title},#{content},#{postTime},#{lastReplyTime},#{lastReplyUser});
+        insert into ufp(pid,uname,fname) values (#{pid},#{uname},#{fname})
+    </insert>
+
+    <!--没有评论时查询楼主的信息和帖子的内容-->
+    <select id="queryPost" resultMap="queryPost">
+        select * from post p,ufp,user u where p.pid = #{pid} and p.pid = ufp.pid and ufp.uname = u.uname
+    </select>
+
+    <update id="updatePost" parameterType="map">
+        update post set maxFloor = #{maxFloor},pcount = #{pcount},lastReplyTime = #{lastReplyTime},
+        lastReplyUser = #{lastReplyUser} where pid = #{pid}
+    </update>
+</mapper>

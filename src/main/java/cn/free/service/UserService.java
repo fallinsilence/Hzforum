@@ -171,4 +171,8 @@ public class UserService {
         dao.updateSignment(map);
         return dao.checkUsername(uname);
     }
+
+    public User queryUser(String uname) {
+        return dao.checkUsername(uname);
+    }
 }

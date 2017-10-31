@@ -8,10 +8,14 @@ public class Post {
     private String content;     //帖子内容
     private String category;    //分类
     private String postTime;    //发帖时间
+    private String lastReplyTime;//最后回复时间
     private String pcount;      //回复数
     private List<Comment> commentList;  //所有楼层
     private Forum forum;        //属于的贴吧
     private User user;          //楼主
+    private String lastReplyUser;      //最后一个回复的用户
+    private String uname;       //楼主用户名
+    private int maxFloor;       //当前帖子最大楼层
 
     public String getPid() {
         return pid;
@@ -53,6 +57,14 @@ public class Post {
         this.postTime = postTime;
     }
 
+    public String getLastReplyTime() {
+        return lastReplyTime;
+    }
+
+    public void setLastReplyTime(String lastReplyTime) {
+        this.lastReplyTime = lastReplyTime;
+    }
+
     public String getPcount() {
         return pcount;
     }
@@ -83,5 +95,29 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getLastReplyUser() {
+        return lastReplyUser;
+    }
+
+    public void setLastReplyUser(String lastReplyUser) {
+        this.lastReplyUser = lastReplyUser;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
+    public int getMaxFloor() {
+        return maxFloor;
+    }
+
+    public void setMaxFloor(int maxFloor) {
+        this.maxFloor = maxFloor;
     }
 }

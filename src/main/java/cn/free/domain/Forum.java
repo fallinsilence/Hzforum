@@ -3,21 +3,13 @@ package cn.free.domain;
 import java.util.List;
 
 public class Forum {
-    private String fid;       //贴吧唯一标识
-    private String fname;     //贴吧名
+    private String fname;     //贴吧名,唯一标识
     private String category;  //所属于的分类
     private int fcount;       //帖子数
     private List<Post> posts; //所有帖子
     private int attention;    //是否关注，0为不关注，1为关注(可能不用)
     private List<User> users; //关注的用户
-
-    public String getFid() {
-        return fid;
-    }
-
-    public void setFid(String fid) {
-        this.fid = fid;
-    }
+    private String createTime;//贴吧创建时间
 
     public String getFname() {
         return fname;
@@ -65,5 +57,13 @@ public class Forum {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 }

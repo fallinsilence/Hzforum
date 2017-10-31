@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.free.domain.Comment">
+
+    <resultMap id="queryComments" type="Comment">
+        <id property="cid" column="cid"/>
+        <result property="floor" column="floor"/>
+        <result property="comment" column="comment"/>
+        <result property="commentTime" column="commentTime"/>
+        <association property="user" javaType="User">
+            <id property="uname" column="uname"/>
+            <result property="nickname" column="nickname"/>
+            <result property="photo" column="photo"/>
+            <result property="signment" column="signment"/>
+        </association>
+    </resultMap>
+
+    <insert id="newComment" parameterType="map">
+        insert into comment values(#{cid},#{floor},#{comment},#{commentTime},#{commentUser});
+        insert into ucp values(#{uname},#{cid},#{pid})
+    </insert>
+
+    <!-- 查询所有评论的内容 -->
+    <select id="queryComments" resultMap="queryComments">
+        select * from ucp,comment c,user u where ucp.pid = #{pid} and ucp.cid = c.cid and ucp.uname = u.uname order by commentTime;
+    </select>
+</mapper>
