@@ -46,6 +46,23 @@ public class UserController {
          return service.checkUsername(username);
     }
 
+    //根据用户名查找用户
+    @RequestMapping("/queryUser")
+    public String queryUser(String uname, HttpServletRequest request){
+        //查询当前要查看的用户信息
+        User user = service.queryUser(uname);
+        //获取已登录的用户名
+        HttpSession session = request.getSession();
+        String username = ((User)session.getAttribute("user")).getUname();
+        //如果所要查看信息的用户是已登录的用户，跳转至登录用户的主页
+        if (user.getUname().equals(username))
+            return "/user/home";
+        else {
+            session.setAttribute("lookedUser", user);
+            return "/user/otherHome";
+        }
+    }
+
     @RequestMapping("/login.action")
     public String login(String username, String password, String captcha, String autoLogin,
                         HttpServletRequest request, HttpServletResponse response){
@@ -80,7 +97,7 @@ public class UserController {
                     sessionId.setPath("/");
                     response.addCookie(sessionId);
                 }
-                return "/user/home";
+                return "redirect:/index.jsp";
             }
 
             //用户名和密码不正确，跳转到登录页面
@@ -180,7 +197,7 @@ public class UserController {
     //更新签名
     @RequestMapping("/updateSignment.action")
     public String updateSignment(String uname, String signment, HttpServletRequest request){
-        User user = null;
+        User user;
         if (signment != ""){
             user = service.updateSignment(uname, signment);
             request.getSession().setAttribute("user", user);
